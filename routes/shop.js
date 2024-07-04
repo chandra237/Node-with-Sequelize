@@ -1,21 +1,26 @@
+//shop.js
 const path = require('path');
 
 const express = require('express');
 
-const adminData = require('./admin');
+const shopControllers = require('../controllers/shop');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  console.log('shop.js', adminData.products);
-  res.render('shop',{
-    prods: adminData.products,
-    pageTitle:'shoppyyyyyyy',
-    path:'/',
-    hasProducts:adminData.products.length>0,
-    activeShop:true,
-    productCSS:true
-  });
-});
+router.get('/', shopControllers.getIndex);
+
+router.get('/products',shopControllers.getProducts);
+
+router.get('/products/:productId',shopControllers.getProduct);               // Dynamic path using colon:
+
+router.get('/cart',shopControllers.getCart);
+
+router.post('/cart',shopControllers.postCart);
+
+router.post('/delete-cart-item', shopControllers.postDeleteCartItem);
+
+router.post('/create-order', shopControllers.postOrder);
+
+router.get('/orders',shopControllers.getOrders);
 
 module.exports = router;
